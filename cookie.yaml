@@ -1,0 +1,23 @@
+services:
+  dvacoo:
+    image: dextre1480/dvacook:1.0
+    container_name: dvacookie
+    restart: unless-stopped  # Mejor manejo de reinicios
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+#    volumes:
+#      - ./cookie.txt:/app/cookie.txt  # Montar cookies actualizables
+    volumes:
+      - /home/ec2-user/cookie.txt:/app/cookie.txt:rw  # Lectura/escritura
+#    command: >
+#      sh -c "
+#      # Primero obtenemos las cookies
+#      yt-dlp --cookies-from-browser firefox --skip-download 'https://youtu.be/7YvAYIJSSZY'"
+    networks:
+      - dvacoo-net
+
+networks:
+  dvacoo-net:
+    driver: bridge
